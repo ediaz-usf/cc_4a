@@ -48,14 +48,16 @@ for (let customer of customers) {
 
 }
 
+// process each customer's cart
 for (let customer in customers) {
 
     let subtotal = 0;
+
 // calculate subtotal
     for (let item of customers[customer].cart) {
         let product = products.find(p => p.prodName === item);
         if (product) {
-            subtotal += product.price;
+            subtotal = subtotal + product.price;
         }
     }
 
