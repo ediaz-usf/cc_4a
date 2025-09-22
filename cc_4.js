@@ -1,4 +1,4 @@
-// Create porduct array
+// Create product array
 
 let products = [
     {prodName: "apple", category: "fruit", price: 1, inventory: 50},
@@ -8,6 +8,7 @@ let products = [
     {prodName: "chicken", category: "meat", price: 5, inventory: 30}
 ];
 
+// apply category discounts
 for (let product of products) {
     
     switch (product.category) {
@@ -27,12 +28,14 @@ for (let product of products) {
 
 }
 
+// create customer array
 let customers = [
     {custName: "Alice", customerType: "regular", cart: [ "apple", "banana" ]},
     {custName: "Kevin", customerType: "student", cart: [ "carrot" ]},
     {custName: "Maria", customerType: "senior", cart: [ "shampoo", "chicken" ]}
 ];
 
+// create customer discounts
 for (let customer of customers) {
 
     if (customer.customerType === "student") {
@@ -42,5 +45,37 @@ for (let customer of customers) {
     } else {
         // No additional discount
     }
+
+}
+
+for (let customer in customers) {
+
+    let subtotal = 0;
+// calculate subtotal
+    for (let item of customers[customer].cart) {
+        let product = products.find(p => p.prodName === item);
+        if (product) {
+            subtotal += product.price;
+        }
+    }
+
+// update inventory after purchase
+    for (let inventory of products) {
+        if (customers[customer].cart.includes(inventory.prodName)) {
+            inventory.inventory = inventory.inventory - 1; // Reduce inventory by 1 for each purchased item
+        }
+    }
+
+// calculate total after customer discount
+    total = subtotal * (1 - customerDiscount);
+
+// show subtotal and total
+    console.log(`Subtotal for ${customers[customer].custName}: $${subtotal.toFixed(2)}`);
+    console.log(`Total for ${customers[customer].custName} after discount: $${total.toFixed(2)}`);
+
+// show updated inventory
+   products.forEach(product => {
+       console.log(`Updated Inventory for ${product.prodName}: ${product.inventory}`);
+   });
 
 }
